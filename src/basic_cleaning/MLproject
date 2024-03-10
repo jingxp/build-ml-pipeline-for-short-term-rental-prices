@@ -1,0 +1,34 @@
+name: basic_cleaning
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      input_artifact:
+        description: "Input artifacts of the basic cleaning step"
+        type: string
+
+      output_artifact:
+        description: "Output artifact name of the basic cleaning step"
+        type: string
+
+      output_type:
+        description: "Out put file type of the basic cleaning step"
+        type: string
+
+      output_description:
+        description: "Description of the basic cleaning step"
+        type: string
+
+      min_price:
+        description: "Minimun price to rule out outlier"
+        type: float
+
+      max_price:
+        description: "Maximun price to rule out outlier"
+        type: float
+
+
+    command: >-
+        python run.py  --input_artifact {input_artifact}  --output_artifact {output_artifact}  --output_type {output_type}  --output_description {output_description}  --min_price {min_price}  --max_price {max_price} 
