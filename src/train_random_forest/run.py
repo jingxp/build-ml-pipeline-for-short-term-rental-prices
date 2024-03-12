@@ -97,21 +97,7 @@ def go(args):
     ######################################
     # Save the sk_pipe pipeline as a mlflow.sklearn model in the directory "random_forest_dir"
     # HINT: use mlflow.sklearn.save_model
-
-    # Infer the signature of the model
-    signature = mlflow.models.infer_signature(X_val, y_pred)
-
-    with tempfile.TemporaryDirectory() as temp_dir:
-
-        export_path = os.path.join(temp_dir, "random_forest_dir")
-
-        mlflow.sklearn.save_model(
-            sk_pipe,
-            export_path,
-            serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,
-            signature=signature,
-            input_example=X_val.iloc[:2],
-        )
+    mlflow.sklearn.save_model(sk_pipe, "random_forest_dir")
     ######################################
 
     ######################################
@@ -127,12 +113,9 @@ def go(args):
         metadata=rf_config,
         )
 
-    artifact.add_dir(export_path)
-
+    artifact.add_dir("random_forest_dir")
     run.log_artifact(artifact)
-
-    # Make sure the artifact is uploaded before the temp dir gets deleted
-    artifact.wait()
+    #artifact.wait()
     ######################################
 
     # Plot feature importance
@@ -249,7 +232,7 @@ def get_inference_pipeline(rf_config, max_tfidf_features):
     sk_pipe = Pipeline(
         steps=[
             ("preprocessor", preprocessor),
-            ("classifier", random_Forest),
+            ("random_forest", random_Forest),
         ]
     )
 
