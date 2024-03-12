@@ -132,7 +132,7 @@ def go(config: DictConfig):
                 "main",
                 version='main',
                 parameters={
-                    "mlflow_model": "random_forest_export:prod",
+                    "mlflow_model": "random_forest_export:latest",
                     "test_dataset": "test_data.csv:latest",
                 },
             )
